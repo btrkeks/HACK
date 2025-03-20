@@ -1,0 +1,342 @@
+.
+├── app
+│   ├── api
+│   │   ├── chat
+│   │   │   └── route.ts
+│   │   ├── chat-history
+│   │   │   └── route.ts
+│   │   ├── process-webpage
+│   │   │   └── route.ts
+│   │   └── twilio
+│   │       ├── call
+│   │       │   └── route.ts
+│   │       └── process-input
+│   │           └── route.ts
+│   ├── call
+│   │   └── page.tsx
+│   ├── chat
+│   │   └── page.tsx
+│   ├── globals.css
+│   ├── layout.tsx
+│   ├── page.tsx
+│   ├── recommendation
+│   │   └── page.tsx
+│   └── recommendations
+│       └── page.tsx
+├── backend
+│   ├── build
+│   │   ├── classes
+│   │   │   └── java
+│   │   │       ├── main
+│   │   │       │   └── de
+│   │   │       │       └── propra
+│   │   │       │           └── exambyte
+│   │   │       │               ├── application
+│   │   │       │               │   ├── repository
+│   │   │       │               │   │   ├── EventRepository.class
+│   │   │       │               │   │   ├── FoerderungRepository.class
+│   │   │       │               │   │   ├── PersonRepository.class
+│   │   │       │               │   │   └── UserRepository.class
+│   │   │       │               │   └── service
+│   │   │       │               │       ├── AiService.class
+│   │   │       │               │       ├── ChatService.class
+│   │   │       │               │       ├── CompanyInfoService.class
+│   │   │       │               │       ├── GeminiClient.class
+│   │   │       │               │       ├── GetFittingService.class
+│   │   │       │               │       ├── OpenAIClient.class
+│   │   │       │               │       └── WebPageProcessingService.class
+│   │   │       │               ├── domain
+│   │   │       │               │   └── model
+│   │   │       │               │       ├── Event.class
+│   │   │       │               │       ├── Foerderung.class
+│   │   │       │               │       ├── Person.class
+│   │   │       │               │       └── user
+│   │   │       │               │           ├── AppUser.class
+│   │   │       │               │           ├── ChatHistory.class
+│   │   │       │               │           └── CompanyInfo.class
+│   │   │       │               ├── ExambyteApplication.class
+│   │   │       │               └── web
+│   │   │       │                   ├── dto
+│   │   │       │                   │   ├── ChatRequest.class
+│   │   │       │                   │   └── ChatResponse.class
+│   │   │       │                   └── PublicController.class
+│   │   │       └── test
+│   │   │           └── de
+│   │   │               └── propra
+│   │   │                   └── exambyte
+│   │   │                       ├── ContainerKonfiguration.class
+│   │   │                       ├── ExambyteApplicationTests.class
+│   │   │                       ├── ExambyteApplicationWithContainer.class
+│   │   │                       ├── GeminiClientTest.class
+│   │   │                       ├── persistence
+│   │   │                       │   ├── EventRepositoryTest.class
+│   │   │                       │   ├── FoerderungRepositoryTest.class
+│   │   │                       │   └── UserRepositoryTest.class
+│   │   │                       └── service
+│   │   │                           ├── ChatServiceIntegrationTest.class
+│   │   │                           └── WebPageProcessingServiceIntegrationTest.class
+│   │   ├── generated
+│   │   │   └── sources
+│   │   │       ├── annotationProcessor
+│   │   │       │   └── java
+│   │   │       │       ├── main
+│   │   │       │       └── test
+│   │   │       └── headers
+│   │   │           └── java
+│   │   │               ├── main
+│   │   │               └── test
+│   │   ├── libs
+│   │   │   ├── exambyte-0.0.1-SNAPSHOT.jar
+│   │   │   └── exambyte-0.0.1-SNAPSHOT-plain.jar
+│   │   ├── reports
+│   │   │   ├── checkstyle
+│   │   │   │   ├── main.html
+│   │   │   │   ├── main.xml
+│   │   │   │   ├── test.html
+│   │   │   │   └── test.xml
+│   │   │   ├── problems
+│   │   │   │   └── problems-report.html
+│   │   │   ├── spotbugs
+│   │   │   │   └── main.html
+│   │   │   └── tests
+│   │   │       └── test
+│   │   │           ├── classes
+│   │   │           │   └── de.propra.exambyte.service.ChatServiceIntegrationTest.html
+│   │   │           ├── css
+│   │   │           │   ├── base-style.css
+│   │   │           │   └── style.css
+│   │   │           ├── index.html
+│   │   │           ├── js
+│   │   │           │   └── report.js
+│   │   │           └── packages
+│   │   │               └── de.propra.exambyte.service.html
+│   │   ├── resolvedMainClassName
+│   │   ├── resources
+│   │   │   └── main
+│   │   │       ├── application.yaml
+│   │   │       ├── db
+│   │   │       │   └── migration
+│   │   │       │       └── V1__tabellen_anlegen.sql
+│   │   │       ├── static
+│   │   │       │   └── css
+│   │   │       │       └── bootstrap.min.css
+│   │   │       └── templates
+│   │   ├── spotbugs
+│   │   │   └── auxclasspath
+│   │   │       ├── spotbugsMain
+│   │   │       └── spotbugsTest
+│   │   ├── spotbugsMain-analyse-class-file.txt
+│   │   ├── spotbugsTest-analyse-class-file.txt
+│   │   ├── test-results
+│   │   │   └── test
+│   │   │       ├── binary
+│   │   │       │   ├── output.bin
+│   │   │       │   ├── output.bin.idx
+│   │   │       │   └── results.bin
+│   │   │       └── TEST-de.propra.exambyte.service.ChatServiceIntegrationTest.xml
+│   │   └── tmp
+│   │       ├── bootJar
+│   │       │   └── MANIFEST.MF
+│   │       ├── checkstyleMain
+│   │       ├── checkstyleTest
+│   │       ├── compileJava
+│   │       │   ├── compileTransaction
+│   │       │   │   ├── backup-dir
+│   │       │   │   └── stash-dir
+│   │       │   │       ├── AppUser.class.uniqueId1
+│   │       │   │       ├── ChatService.class.uniqueId0
+│   │       │   │       ├── GetFittingService.class.uniqueId2
+│   │       │   │       ├── PublicController.class.uniqueId5
+│   │       │   │       ├── UserRepository.class.uniqueId4
+│   │       │   │       └── WebPageProcessingService.class.uniqueId3
+│   │       │   └── previous-compilation-data.bin
+│   │       ├── compileTestJava
+│   │       │   ├── compileTransaction
+│   │       │   │   ├── backup-dir
+│   │       │   │   └── stash-dir
+│   │       │   │       └── ChatServiceIntegrationTest.class.uniqueId0
+│   │       │   └── previous-compilation-data.bin
+│   │       ├── jar
+│   │       │   └── MANIFEST.MF
+│   │       └── test
+│   ├── build.gradle
+│   ├── concat_script
+│   ├── config
+│   │   └── checkstyle
+│   │       └── checkstyle.xml
+│   ├── data  [error opening dir]
+│   ├── docker-compose.yaml
+│   ├── gradle
+│   │   └── wrapper
+│   │       ├── gradle-wrapper.jar
+│   │       └── gradle-wrapper.properties
+│   ├── gradlew
+│   ├── gradlew.bat
+│   ├── out
+│   │   └── production
+│   │       └── resources
+│   │           ├── application.yaml
+│   │           ├── db
+│   │           │   └── migration
+│   │           │       └── V1__tabellen_anlegen.sql
+│   │           ├── static
+│   │           │   └── css
+│   │           │       └── bootstrap.min.css
+│   │           └── templates
+│   │               ├── add_freitext_to_test_set.html
+│   │               ├── add_multiple_choice_to_test_set.html
+│   │               ├── alle_abgaben_uebersicht.html
+│   │               ├── korrektur_stand.html
+│   │               ├── korrektur_status_uebersicht.html
+│   │               ├── new_test_set.html
+│   │               ├── results_page.html
+│   │               ├── student_landing_page.html
+│   │               ├── student_result.html
+│   │               ├── test_execution_freitext.html
+│   │               ├── test_execution_multiple_choice.html
+│   │               └── test_set_preview.html
+│   ├── project_dump.txt
+│   ├── run.sh
+│   ├── settings.gradle
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   │   └── de
+│       │   │       └── propra
+│       │   │           └── exambyte
+│       │   │               ├── application
+│       │   │               │   ├── repository
+│       │   │               │   │   ├── EventRepository.java
+│       │   │               │   │   ├── FoerderungRepository.java
+│       │   │               │   │   ├── PersonRepository.java
+│       │   │               │   │   └── UserRepository.java
+│       │   │               │   └── service
+│       │   │               │       ├── AiService.java
+│       │   │               │       ├── ChatService.java
+│       │   │               │       ├── CompanyInfoService.java
+│       │   │               │       ├── GeminiClient.java
+│       │   │               │       ├── GetFittingService.java
+│       │   │               │       ├── OpenAIClient.java
+│       │   │               │       └── WebPageProcessingService.java
+│       │   │               ├── domain
+│       │   │               │   ├── model
+│       │   │               │   │   ├── Event.java
+│       │   │               │   │   ├── Foerderung.java
+│       │   │               │   │   ├── Person.java
+│       │   │               │   │   └── user
+│       │   │               │   │       ├── AppUser.java
+│       │   │               │   │       ├── ChatHistory.java
+│       │   │               │   │       └── CompanyInfo.java
+│       │   │               │   └── service
+│       │   │               ├── ExambyteApplication.java
+│       │   │               └── web
+│       │   │                   ├── dto
+│       │   │                   │   ├── ChatRequest.java
+│       │   │                   │   └── ChatResponse.java
+│       │   │                   └── PublicController.java
+│       │   └── resources
+│       │       ├── application.yaml
+│       │       ├── db
+│       │       │   └── migration
+│       │       │       └── V1__tabellen_anlegen.sql
+│       │       ├── static
+│       │       │   └── css
+│       │       │       └── bootstrap.min.css
+│       │       └── templates
+│       └── test
+│           └── java
+│               └── de
+│                   └── propra
+│                       └── exambyte
+│                           ├── ContainerKonfiguration.java
+│                           ├── ExambyteApplicationTests.java
+│                           ├── ExambyteApplicationWithContainer.java
+│                           ├── GeminiClientTest.java
+│                           ├── persistence
+│                           │   ├── EventRepositoryTest.java
+│                           │   ├── FoerderungRepositoryTest.java
+│                           │   └── UserRepositoryTest.java
+│                           └── service
+│                               ├── ChatServiceIntegrationTest.java
+│                               └── WebPageProcessingServiceIntegrationTest.java
+├── components
+│   ├── choice-dialog.tsx
+│   ├── header.tsx
+│   ├── interactive-background.tsx
+│   ├── interactive-hero.tsx
+│   ├── theme-provider.tsx
+│   └── ui
+│       ├── accordion.tsx
+│       ├── alert-dialog.tsx
+│       ├── alert.tsx
+│       ├── aspect-ratio.tsx
+│       ├── avatar.tsx
+│       ├── badge.tsx
+│       ├── breadcrumb.tsx
+│       ├── button.tsx
+│       ├── calendar.tsx
+│       ├── card.tsx
+│       ├── carousel.tsx
+│       ├── chart.tsx
+│       ├── checkbox.tsx
+│       ├── collapsible.tsx
+│       ├── command.tsx
+│       ├── context-menu.tsx
+│       ├── dialog.tsx
+│       ├── drawer.tsx
+│       ├── dropdown-menu.tsx
+│       ├── form.tsx
+│       ├── hover-card.tsx
+│       ├── input-otp.tsx
+│       ├── input.tsx
+│       ├── label.tsx
+│       ├── menubar.tsx
+│       ├── navigation-menu.tsx
+│       ├── pagination.tsx
+│       ├── popover.tsx
+│       ├── progress.tsx
+│       ├── radio-group.tsx
+│       ├── resizable.tsx
+│       ├── scroll-area.tsx
+│       ├── select.tsx
+│       ├── separator.tsx
+│       ├── sheet.tsx
+│       ├── sidebar.tsx
+│       ├── skeleton.tsx
+│       ├── slider.tsx
+│       ├── sonner.tsx
+│       ├── switch.tsx
+│       ├── table.tsx
+│       ├── tabs.tsx
+│       ├── textarea.tsx
+│       ├── toaster.tsx
+│       ├── toast.tsx
+│       ├── toggle-group.tsx
+│       ├── toggle.tsx
+│       ├── tooltip.tsx
+│       ├── use-mobile.tsx
+│       └── use-toast.ts
+├── components.json
+├── file_structure.txt
+├── hooks
+│   ├── use-mobile.tsx
+│   └── use-toast.ts
+├── lib
+│   └── utils.ts
+├── next.config.mjs
+├── package.json
+├── package-lock.json
+├── postcss.config.mjs
+├── public
+│   ├── placeholder.jpg
+│   ├── placeholder-logo.png
+│   ├── placeholder-logo.svg
+│   ├── placeholder.svg
+│   └── placeholder-user.jpg
+├── README.md
+├── styles
+│   └── globals.css
+├── tailwind.config.ts
+└── tsconfig.json
+
+129 directories, 211 files
