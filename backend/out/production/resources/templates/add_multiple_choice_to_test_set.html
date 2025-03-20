@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Multiple Choice Frage hinzufügen</title>
+</head>
+<body>
+<h1>Multiple Choice Frage hinzufügen</h1>
+
+<form th:action="@{/tests/{id}/add/multiplechoice(id=${testSetId})}"
+      th:object="${multipleChoiceQuestionCreationRequest}"
+      method="post">
+
+    <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger">
+        <ul>
+            <li th:each="err : ${#fields.allErrors()}" th:text="${err}"></li>
+        </ul>
+    </div>
+
+    <div>
+        <label for="fragestellung">Fragestellung:</label>
+        <textarea id="fragestellung"
+                  th:field="*{fragestellung}"
+                  required></textarea>
+        <span th:if="${#fields.hasErrors('fragestellung')}"
+              th:errors="*{fragestellung}"></span>
+    </div>
+
+    <div>
+        <label for="maximalePunktzahl">Maximale Punktzahl:</label>
+        <input type="number"
+               id="maximalePunktzahl"
+               th:field="*{maximalePunktzahl}"
+               min="1" required/>
+        <span th:if="${#fields.hasErrors('maximalePunktzahl')}"
+              th:errors="*{maximalePunktzahl}"></span>
+    </div>
+
+    <div id="optionen-container">
+        <div class="option-template" style="display: none">
+            <div class="option">
+            </div>
+        </div>
+
+        <div id="optionen"></div>
+        <button type="button" onclick="addOption()">Neue Option</button>
+    </div>
+
+    <div>
+        <label for="korrekteLoesung">Erklärung der korrekten Lösung:</label>
+        <textarea id="korrekteLoesung"
+                  th:field="*{korrekteLoesung}"
+                  required></textarea>
+        <span th:if="${#fields.hasErrors('korrekteLoesung')}"
+              th:errors="*{korrekteLoesung}"></span>
+    </div>
+
+    <button type="submit">Frage hinzufügen</button>
+</form>
+
+<script>
+    // Ein wenig KI generiertes JavaScript, da es deutlich schöner ist als reines HTTP/HTML
+    let optionCount = 0;
+
+    function addOption() {
+        const container = document.getElementById('optionen');
+        const optionDiv = document.createElement('div');
+        optionDiv.className = 'option';
+
+        // Create text input
+        const textInput = document.createElement('input');
+        textInput.type = 'text';
+        textInput.name = `optionen[${optionCount}].text`;
+        textInput.required = true;
+
+        // Create checkbox
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.name = `optionen[${optionCount}].korrekteAuswahl`;
+
+        // Create label
+        const label = document.createElement('label');
+        label.textContent = 'Korrekte Antwort?';
+
+        // Create remove button
+        const removeButton = document.createElement('button');
+        removeButton.type = 'button';
+        removeButton.className = 'remove-option';
+        removeButton.textContent = 'Option entfernen';
+        removeButton.onclick = function() {
+            this.closest('.option').remove();
+            updateOptionIndices();
+        };
+
+        // Add all elements to the div
+        optionDiv.appendChild(textInput);
+        optionDiv.appendChild(checkbox);
+        optionDiv.appendChild(label);
+        optionDiv.appendChild(removeButton);
+
+        container.appendChild(optionDiv);
+        optionCount++;
+    }
+
+    function updateOptionIndices() {
+        const options = document.querySelectorAll('#optionen .option');
+        options.forEach((option, index) => {
+            option.querySelectorAll('input').forEach(input => {
+                if(input.type === 'text') {
+                    input.name = `optionen[${index}].text`;
+                } else if(input.type === 'checkbox') {
+                    input.name = `optionen[${index}].korrekteAuswahl`;
+                }
+            });
+        });
+    }
+
+    // Add two options by default
+    addOption();
+    addOption();
+</script>
+</body>
+</html>

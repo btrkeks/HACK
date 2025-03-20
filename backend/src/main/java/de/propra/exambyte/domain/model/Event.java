@@ -1,0 +1,14 @@
+package de.propra.exambyte.domain.model;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
+import org.springframework.data.annotation.Id;
+
+public record Event(@Id UUID id,
+                    String name,
+                    LocalDateTime zeitPunkt,
+                    String Adresse,
+                    String link,
+                    String beschreibung,
+                    String branche) {
+}

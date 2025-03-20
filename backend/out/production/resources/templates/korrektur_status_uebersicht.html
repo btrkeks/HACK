@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Korrektur Status Übersicht</title>
+</head>
+<body>
+<h1>Korrektur Status Übersicht</h1>
+<div>
+    <p>Gesamtanzahl Abgaben: <span th:text="${korrekturStatus.totalSubmissions}">0</span></p>
+    <p>Unkorrigierte Abgaben: <span th:text="${korrekturStatus.numUncorrectedSubmissions}">0</span></p>
+</div>
+<div>
+    <h2>Unkorrigierte Abgaben pro Frage</h2>
+    <ul>
+        <li th:each="entry : ${korrekturStatus.uncorrectedSubmissionsPerQuestion.entrySet()}">
+            Frage ID: <span th:text="${entry.key}">ID</span> –
+            Anzahl: <span th:text="${entry.value}">0</span>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

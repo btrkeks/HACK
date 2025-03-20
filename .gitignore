@@ -25,3 +25,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+backend/concat_script
+backend/project_dump.txt
+backend/.idea
+backend/.gradle
+backend/build

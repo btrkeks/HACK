@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
+<head>
+    <title>Test Durchführung - Freitext</title>
+</head>
+<body>
+<div>
+    <div>
+        <h1>Test Durchführung</h1>
+
+        <!-- Question -->
+        <div>
+            <div>(<span th:text="${question.maximalePunktzahl().points()}"></span> Punkte)</div>
+            <div th:utext="${question.getFragestellung()}"></div>
+        </div>
+
+        <!-- Answer Form -->
+        <form th:action="@{/tests/{testId}/execute/freitext/{questionIndex}(testId=${testSet.id},questionIndex=${currentQuestionIndex})}"
+              th:object="${freitextAntwortForm}"
+              method="post">
+
+            <div>
+                <label for="antwortText">Antwort:</label><br>
+                <label type="hidden" th:field="*{frageId}"></label>
+                <textarea id="antwortText"
+                          name="antwortText"
+                          th:field="*{antwortText}"
+                          rows="6"></textarea>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div>
+                <button type="submit"
+                        name="action"
+                        value="previous"
+                        th:disabled="${!hasPreviousQuestion}">
+                    Zurück
+                </button>
+                <span th:text="|Frage ${currentQuestionIndex + 1} von ${testSet.fragen().size()}|"></span>
+                <button type="submit"
+                        name="action"
+                        value="next"
+                        th:if="${hasNextQuestion}">
+                    Weiter
+                </button>
+                <button type="submit"
+                        name="action"
+                        value="finish"
+                        th:if="${!hasNextQuestion}">
+                    Test beenden
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

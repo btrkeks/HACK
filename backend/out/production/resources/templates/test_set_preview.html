@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Vorschau</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        /* Base styles */
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            line-height: 1.5;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+            background-color: #f3f4f6;
+        }
+
+        /* Timeline styles */
+        .timeline {
+            background: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .timeline-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+        }
+
+        .timeline h3 {
+            font-size: 0.875rem;
+            margin: 0 0 0.25rem 0;
+            color: #6b7280;
+        }
+
+        .timeline p {
+            font-size: 1rem;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        /* Navigation tabs */
+        .question-tabs {
+            display: flex;
+            overflow-x: auto;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            background: white;
+            border-radius: 0.5rem 0.5rem 0 0;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .question-tab {
+            padding: 0.5rem 1rem;
+            border: none;
+            background: #f3f4f6;
+            border-radius: 0.5rem 0.5rem 0 0;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .question-tab[aria-selected="true"] {
+            background: #3b82f6;
+            color: white;
+        }
+
+        /* Question content */
+        .question-panels {
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .question-content {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0 0 0.5rem 0.5rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            flex: 1;
+        }
+
+        .question-panel {
+            display: none;
+            height: 100%;
+        }
+
+        .question-panel[aria-hidden="false"] {
+            display: block;
+        }
+
+        /* Question styles */
+        .question-text pre {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 0.25rem;
+            padding: 1rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: monospace;
+        }
+
+        .question-text h3 {
+            color: #2563eb;
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        .question-text p {
+            margin-bottom: 1rem;
+        }
+
+        .question-text strong {
+            color: #1f2937;
+        }
+
+        /* Form elements */
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: start;
+            gap: 0.5rem;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 0.5rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.25rem;
+            margin-top: 1rem;
+        }
+
+        /* Navigation controls */
+        .nav-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 0.5rem;
+        }
+
+        .nav-button {
+            padding: 0.5rem 1rem;
+            background: #f3f4f6;
+            border: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
+        }
+
+        .nav-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .timeline-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .timeline-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-controls {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div th:if="${success}" class="alert alert-success" role="alert">
+    <span th:text="${success}"></span>
+</div>
+
+<main>
+    <!-- Timeline Section -->
+    <section class="timeline" aria-labelledby="timeline-heading">
+        <h2 id="timeline-heading" class="sr-only">Zeitplan</h2>
+        <div class="timeline-grid">
+            <div>
+                <h3>Start</h3>
+                <p th:text="${#temporals.format(testSet.period().startTime(), 'dd.MM.yyyy HH:mm')}">
+                    01.01.2024 10:00
+                </p>
+            </div>
+            <div>
+                <h3>Ende</h3>
+                <p th:text="${#temporals.format(testSet.period().endTime(), 'dd.MM.yyyy HH:mm')}">
+                    01.01.2024 11:30
+                </p>
+            </div>
+            <div>
+                <h3>Ergebnisse verfügbar</h3>
+                <p th:text="${#temporals.format(testSet.resultPublicationTimestamp(), 'dd.MM.yyyy HH:mm')}">
+                    02.01.2024 12:00
+                </p>
+            </div>
+            <div>
+                <h3>Maximale Punktzahl</h3>
+                <p th:text="${testSet.erreichbarePunkte().num()}">25</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Neue Fragen hinzufügen -->
+    <section class="form-container" th:if="${testSet.isEditable()}">
+        <h2>Fragen hinzufügen</h2>
+        <div class="button-group">
+            <a th:href="@{/tests/{id}/add/multiplechoice(id=${testSet.id()})}"
+               class="button button-secondary">
+                Multiple-Choice-Frage hinzufügen
+            </a>
+            <a th:href="@{/tests/{id}/add/freitext(id=${testSet.id()})}"
+               class="button button-secondary">
+                Freitext-Frage hinzufügen
+            </a>
+        </div>
+    </section>
+
+    <!-- Question Navigation -->
+    <div role="tablist" class="question-tabs">
+        <button th:each="frage, iterStat : ${testSet.fragen()}"
+                th:id="'tab-' + ${iterStat.index}"
+                role="tab"
+                th:aria-controls="'panel-' + ${iterStat.index}"
+                th:aria-selected="${iterStat.index == 0}"
+                class="question-tab"
+                th:text="'Frage ' + ${iterStat.count}">
+            Frage 1
+        </button>
+    </div>
+
+    <!-- Question Panels -->
+    <div class="question-panels">
+        <div th:each="frage, iterStat : ${testSet.fragen()}"
+             th:id="'panel-' + ${iterStat.index}"
+             role="tabpanel"
+             th:aria-labelledby="'tab-' + ${iterStat.index}"
+             class="question-panel question-content"
+             th:aria-hidden="${iterStat.index != 0}">
+
+            <h3>
+                <span th:text="'Frage ' + ${iterStat.count}">Frage 1</span>
+                <span class="points-text" style="font-weight: normal; font-size: 0.9em; color: #666;">
+                        (<span th:text="${frage.maximalePunktzahl().num()}">10</span> Punkte)
+                </span>
+            </h3>
+            <div class="question-text" th:utext="${frage.getFragestellung()}">Fragestellung</div>
+
+            <!-- Multiple Choice Question -->
+            <div th:if="${frage instanceof T(propra.exambyte.domain.model.testset.testfrage.multiplechoicefrage.MultipleChoiceFrage)}"
+                 class="checkbox-group">
+                <div th:each="option : ${frage.optionen()}" class="checkbox-label">
+                    <input type="checkbox"
+                           th:id="${option.id()}"
+                           disabled>
+                    <label th:for="${option.id()}"
+                           th:text="${option.text()}">Option</label>
+                </div>
+            </div>
+
+            <!-- Free Text Question -->
+            <div th:if="${frage instanceof T(propra.exambyte.domain.model.testset.testfrage.freitextfrage.FreitextFrage)}">
+                <textarea disabled
+                          aria-label="Ihre Antwort"
+                          th:placeholder="${isOrganizer} ? ${frage.loesungsVorschlag()} : 'Geben Sie hier Ihre Antwort ein...'"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="nav-controls" th:if="${testSet.fragen().size() > 1}">
+        <button id="prevButton"
+                class="nav-button"
+                disabled>← Vorherige</button>
+        <span id="questionCounter">Frage 1 von <span th:text="${testSet.fragen().size()}">10</span></span>
+        <button id="nextButton"
+                class="nav-button">Nächste →</button>
+    </div>
+</main>
+
+<script>
+    $(document).ready(function() {
+        let currentTab = 0;
+        const totalQuestions = $('.question-panel').length;
+
+        function updateNavButtons() {
+            $('#prevButton').prop('disabled', currentTab === 0);
+            $('#nextButton').prop('disabled', currentTab === totalQuestions - 1);
+            $('#questionCounter').text(`Frage ${currentTab + 1} von ${totalQuestions}`);
+        }
+
+        function showTab(index) {
+            $('.question-tab').attr('aria-selected', false);
+            $('.question-panel').attr('aria-hidden', true);
+
+            $(`#tab-${index}`).attr('aria-selected', true);
+            $(`#panel-${index}`).attr('aria-hidden', false);
+
+            currentTab = index;
+            updateNavButtons();
+        }
+
+        // Tab click handlers
+        $('.question-tab').click(function() {
+            const index = $(this).index();
+            showTab(index);
+        });
+
+        // Navigation button handlers
+        $('#prevButton').click(() => {
+            if (currentTab > 0) showTab(currentTab - 1);
+        });
+
+        $('#nextButton').click(() => {
+            if (currentTab < totalQuestions - 1) showTab(currentTab + 1);
+        });
+
+        // Keyboard navigation
+        $(document).keydown(function(e) {
+            if (e.key === 'ArrowLeft' && currentTab > 0) {
+                showTab(currentTab - 1);
+            } else if (e.key === 'ArrowRight' && currentTab < totalQuestions - 1) {
+                showTab(currentTab + 1);
+            }
+        });
+
+        // Initialize first tab
+        showTab(0);
+    });
+</script>
+</body>
+</html>

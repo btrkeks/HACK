@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mein Testergebnis</title>
+</head>
+<body>
+<h1>Mein Testergebnis</h1>
+<div>
+    <h2>Test ID: <span th:text="${testSet.id}">TestID</span></h2>
+    <p>Erreichte Punktzahl: <span th:text="${result.erreichtePunktzahl.num()}">0</span></p>
+    <div th:if="${result.nichtBestandenReason != null}">
+        <p>Nicht bestanden wegen: <span th:text="${result.nichtBestandenReason}">Grund</span></p>
+    </div>
+    <div th:unless="${result.nichtBestandenReason != null}">
+        <p>Test bestanden!</p>
+    </div>
+</div>
+</body>
+</html>

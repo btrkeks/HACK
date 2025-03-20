@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Dashboard</title>
+</head>
+<body>
+<h1>Student Dashboard</h1>
+
+<div th:if="${zulassungsStatus}">
+    <p>Admission Status: <span th:text="${zulassungsStatus}"></span></p>
+</div>
+
+<div th:if="${testsWithStatus}">
+    <ul>
+        <li th:each="test : ${testsWithStatus}">
+            Test ID: <span th:text="${test.testSetId}"></span> –
+            Status: <span th:text="${test.testStatus}"></span> –
+            <a th:href="@{'/tests/' + ${test.testSetId} + '/mein-ergebnis'}">View Result</a>
+        </li>
+    </ul>
+</div>
+
+</body>
+</html>
