@@ -1,5 +1,14 @@
+logging:
+  level:
+    de:
+      propra:
+        exambyte:
+          application:
+            service:
+              WebPageProcessingService: DEBUG
+
 spring:
   datasource:
     password: hack
     username: hack
-    url: jdbc:postgresql://localhost:5432/hack
+    url: jdbc:postgresql://database:5432/hack

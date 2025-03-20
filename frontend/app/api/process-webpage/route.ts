@@ -20,8 +20,9 @@ export async function GET(request: Request) {
     }
 
     // Make request to the actual backend
+    const backendUrl = process.env.BACKEND_URL || 'http://localhost:8080';
     const response = await fetch(
-      `http://localhost:8080/process-webpage?url=${encodeURIComponent(processUrl)}`,
+      `${backendUrl}/process-webpage?url=${encodeURIComponent(processUrl)}`,
       {
         method: 'GET',
         headers: {

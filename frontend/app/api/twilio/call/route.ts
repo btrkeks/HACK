@@ -6,7 +6,8 @@ export async function POST(request: Request) {
     // Forward the request to the Java backend
     const formData = await request.formData();
     
-    const response = await fetch('http://localhost:8080/twilio/call', {
+    const backendUrl = process.env.BACKEND_URL || 'http://localhost:8080';
+    const response = await fetch(`${backendUrl}/twilio/call`, {
       method: 'POST',
       body: formData,
     });

@@ -21,8 +21,5 @@ WORKDIR /app
 # Copy application jar
 COPY --from=build /app/build/libs/exambyte-0.0.1-SNAPSHOT.jar app.jar
 
-# Update the database URL to use the service name defined in docker-compose
-ENV SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/hack
-
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]

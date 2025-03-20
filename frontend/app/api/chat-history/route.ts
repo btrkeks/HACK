@@ -14,7 +14,8 @@ export async function GET(request: Request) {
     }
 
     // Make request to the actual backend
-    const response = await fetch(`http://localhost:8080/chat-history?userId=${userId}`, {
+    const backendUrl = process.env.BACKEND_URL || 'http://localhost:8080';
+    const response = await fetch(`${backendUrl}/chat-history?userId=${userId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
