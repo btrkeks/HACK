@@ -1,6 +1,7 @@
 build:
   docker:
     web: backend/Dockerfile
+    frontend: frontend/Dockerfile
     
 setup:
   addons:
@@ -9,3 +10,4 @@ setup:
 
 run:
   web: java -Dspring.datasource.url=$DATABASE_URL -jar /app/app.jar
+  frontend: node /app/server.js
