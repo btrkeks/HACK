@@ -65,7 +65,7 @@ public class PublicController {
 
   @GetMapping("/chat-history")
   public List<ChatHistory> getChatHistory(Long userId) {
-    AppUser user = userRepository.findById(userId).orElseThrow();
+    AppUser user = userRepository.findById(1L).orElseThrow();
     return user.getMessages();
   }
 }
