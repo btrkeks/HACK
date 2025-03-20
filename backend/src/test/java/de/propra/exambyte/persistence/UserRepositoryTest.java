@@ -131,7 +131,7 @@ public class UserRepositoryTest {
   @Test
   void saveUserWithCompanyInfo_shouldPersistCompanyInfo() {
     // Given
-    CompanyInfo companyInfo = new CompanyInfo("Test Company", 100);
+    CompanyInfo companyInfo = new CompanyInfo("Test Company", 100, "Tech");
     AppUser user = new AppUser(null, "testuser", companyInfo, new ArrayList<>());
 
     // When
@@ -282,12 +282,12 @@ public class UserRepositoryTest {
   @Test
   void updateCompanyInfo_shouldUpdateCompanyInfoInUser() {
     // Given
-    CompanyInfo initialCompanyInfo = new CompanyInfo("Initial Company", 50);
+    CompanyInfo initialCompanyInfo = new CompanyInfo("Initial Company", 50, "Tech");
     AppUser user = new AppUser(null, "testuser", initialCompanyInfo, new ArrayList<>());
     AppUser savedUser = userRepository.save(user);
 
     // When - update company info
-    CompanyInfo updatedCompanyInfo = new CompanyInfo("Updated Company", 100);
+    CompanyInfo updatedCompanyInfo = new CompanyInfo("Updated Company", 100, "Tech");
     AppUser updatedUser = new AppUser(
         savedUser.getId(),
         savedUser.getUsername(),

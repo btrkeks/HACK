@@ -56,5 +56,6 @@ create table company_info
 (
     app_user            integer references app_user (id),
     company_name        varchar(200),
-    number_of_employees integer
+    number_of_employees integer,
+    industry            varchar(200)
 );
