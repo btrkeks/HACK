@@ -16,6 +16,7 @@ interface CompanyData {
 
 export default function MainPage() {
   const [url, setUrl] = useState("")
+  const [name, setName] = useState("")
   const [dialogOpen, setDialogOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [companyData, setCompanyData] = useState<CompanyData | null>(null)
@@ -62,6 +63,15 @@ export default function MainPage() {
         <p className="text-sm text-center mb-6 text-gray-700">Füge die Website deiner Firma ein um uns ein Onbaording zu erleichtern und starte den Prozess!</p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          <Input
+            type="text"
+            placeholder="Name eingeben..."
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            fullWidth
+            className="border-primary/30 focus:border-primary"
+          />
+
           <Input
             type="text"
             placeholder="URL hier eingeben..."

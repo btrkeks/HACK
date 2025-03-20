@@ -2,6 +2,13 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu"
+import { ChevronDown } from "lucide-react"
 
 export default function Header() {
   const pathname = usePathname()
@@ -24,21 +31,35 @@ export default function Header() {
           >
             Startseite
           </Link>
+          
+          {/* Dropdown menu for Vergangene Gespräche */}
+          <DropdownMenu>
+            <DropdownMenuTrigger className={`${pathname === "/chat" || pathname === "/call" ? "text-primary font-medium" : "text-gray-500"} hover:text-primary flex items-center gap-1`}>
+              Vergangene Gespräche <ChevronDown className="h-4 w-4" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem asChild>
+                <Link
+                  href="/chat"
+                  className={`${pathname === "/chat" ? "bg-accent" : ""} w-full`}
+                >
+                  Chat
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link
+                  href="/call"
+                  className={`${pathname === "/call" ? "bg-accent" : ""} w-full`}
+                >
+                  Telefonieren
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          
           <Link
-            href="/chat"
-            className={`${pathname === "/chat" ? "text-primary font-medium" : "text-gray-500"} hover:text-primary`}
-          >
-            Chat
-          </Link>
-          <Link
-            href="/call"
-            className={`${pathname === "/call" ? "text-primary font-medium" : "text-gray-500"} hover:text-primary`}
-          >
-            Telefonieren
-          </Link>
-          <Link
-            href="/recommendation"
-            className={`${pathname === "/recommendation" ? "text-primary font-medium" : "text-gray-500"} hover:text-primary`}
+            href="/recommendations"
+            className={`${pathname === "/recommendations" ? "text-primary font-medium" : "text-gray-500"} hover:text-primary`}
           >
             Empfehlungen
           </Link>
