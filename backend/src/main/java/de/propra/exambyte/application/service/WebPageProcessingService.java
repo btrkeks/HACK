@@ -32,15 +32,20 @@ public class WebPageProcessingService {
     this.userRepository = userRepository;
   }
 
-  public boolean processWebpage(Long userId, String url) {
+  public CompanyInfo processWebpage(Long userId, String url) {
     try {
-      // 1. Fetch the user
+      // 1. Fetch the user or create a new one if not found
       Optional<AppUser> userOptional = userRepository.findById(userId);
+      AppUser user;
       if (userOptional.isEmpty()) {
-        logger.warn("User with ID {} not found", userId);
-        return false; // User not found
+        logger.info("User with ID {} not found. Creating a new user.", userId);
+        // Create a new user with default values
+        user = new AppUser("user_");
+        // Save the new user to the repository
+        userRepository.save(user);
+      } else {
+        user = userOptional.get();
       }
-      AppUser user = userOptional.get();
 
       // 2. Download the webpage content
       String webpageContent = downloadWebpage(url);
@@ -63,10 +68,10 @@ public class WebPageProcessingService {
       userRepository.save(updatedUser);
       logger.info("Updated user {} with company info", userId);
 
-      return true;
+      return companyInfo;
     } catch (Exception e) {
       logger.error("Error processing webpage: " + url, e);
-      return false;
+      return null;
     }
   }
 
@@ -87,7 +92,8 @@ public class WebPageProcessingService {
     if (response.statusCode() >= 200 && response.statusCode() < 300) {
       return response.body();
     } else {
-      throw new IOException("Failed to download webpage: HTTP status code " + response.statusCode());
+      throw new IOException(
+          "Failed to download webpage: HTTP status code " + response.statusCode());
     }
   }
 
@@ -134,12 +140,14 @@ public class WebPageProcessingService {
 
         String companyName = jsonNode.path("companyName").asText("");
         Integer numberOfEmployees = null;
-        if (!jsonNode.path("numberOfEmployees").isNull() && !jsonNode.path("numberOfEmployees").asText().isEmpty()) {
+        if (!jsonNode.path("numberOfEmployees").isNull() &&
+            !jsonNode.path("numberOfEmployees").asText().isEmpty()) {
           try {
             numberOfEmployees = Integer.parseInt(jsonNode.path("numberOfEmployees").asText());
           } catch (NumberFormatException e) {
             // If not a valid number, leave as null
-            logger.warn("Failed to parse number of employees: {}", jsonNode.path("numberOfEmployees").asText());
+            logger.warn("Failed to parse number of employees: {}",
+                jsonNode.path("numberOfEmployees").asText());
           }
         }
 
@@ -148,7 +156,8 @@ public class WebPageProcessingService {
         // Fallback if no valid JSON found
         logger.warn("No valid JSON found in Gemini response: {}", response);
         // Use the domain name as a fallback company name
-        String fallbackName = domain.replaceAll("www\\.", "").replaceAll("\\.com|\\.org|\\.net", "");
+        String fallbackName =
+            domain.replaceAll("www\\.", "").replaceAll("\\.com|\\.org|\\.net", "");
         return new CompanyInfo(fallbackName, null);
       }
     } catch (Exception e) {

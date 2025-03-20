@@ -52,10 +52,10 @@ public class WebPageProcessingServiceIntegrationTest {
     String url = "https://www.microsoft.com/en-us/about";
 
     // When
-    boolean result = webPageProcessingService.processWebpage(testUserId, url);
+    CompanyInfo result = webPageProcessingService.processWebpage(testUserId, url);
 
     // Then
-    assertThat(result).isTrue();
+    assertThat(result).isNotNull();
 
     // Verify the user's company info was updated
     Optional<AppUser> updatedUserOpt = userRepository.findById(testUserId);
@@ -89,9 +89,9 @@ public class WebPageProcessingServiceIntegrationTest {
     // Replace with any URL you want to test
     String url = "https://about.google/";
 
-    boolean result = webPageProcessingService.processWebpage(testUserId, url);
+    CompanyInfo result = webPageProcessingService.processWebpage(testUserId, url);
 
-    assertThat(result).isTrue();
+    assertThat(result).isNotNull();
 
     Optional<AppUser> updatedUserOpt = userRepository.findById(testUserId);
     AppUser updatedUser = updatedUserOpt.get();
