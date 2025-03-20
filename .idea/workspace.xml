@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95d79dcb-4fcb-49ef-85e4-6914b325d4e8" name="Changes" comment="Push backend" />
+    <list default="true" id="95d79dcb-4fcb-49ef-85e4-6914b325d4e8" name="Changes" comment="Implement extracting industry and remove call button">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,10 +15,10 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 5
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="2uYietUEeRscNADrOVRO33AaV0A" />
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
@@ -25,14 +27,15 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "6f17bedb",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/daniel/.local/share/src/HACK/backend",
+    "last_opened_file_path": "/home/daniel/.local/share/src/HACK",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "ts.external.directory.path": "/opt/intellij-idea-ultimate/plugins/javascript-plugin/jsLanguageServicesImpl/external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -53,6 +56,7 @@
       <option name="presentableId" value="Default" />
       <updated>1742432008091</updated>
       <workItem from="1742432011784" duration="370000" />
+      <workItem from="1742513053981" duration="1418000" />
     </task>
     <task id="LOCAL-00001" summary="Push backend">
       <option name="closed" value="true" />
@@ -62,7 +66,15 @@
       <option name="project" value="LOCAL" />
       <updated>1742432273862</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Implement extracting industry and remove call button">
+      <option name="closed" value="true" />
+      <created>1742514356543</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1742514356543</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -70,6 +82,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Push backend" />
-    <option name="LAST_COMMIT_MESSAGE" value="Push backend" />
+    <MESSAGE value="Update backend" />
+    <MESSAGE value="Implement extracting industry and remove call button" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implement extracting industry and remove call button" />
   </component>
 </project>

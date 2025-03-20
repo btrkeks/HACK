@@ -66,6 +66,7 @@ public class WebPageProcessingService {
     HttpClient client = HttpClient.newBuilder()
         .version(HttpClient.Version.HTTP_2)
         .connectTimeout(Duration.ofSeconds(20))
+        .followRedirects(HttpClient.Redirect.NORMAL)
         .build();
 
     HttpRequest request = HttpRequest.newBuilder()
@@ -98,18 +99,21 @@ public class WebPageProcessingService {
     String prompt = String.format(
         "I need to extract company information from this webpage (domain: %s).\n\n" +
             "Here's the content (possibly truncated):\n\n%s\n\n" +
-            "Extract the company name and approximation of the number of employees based on this content " +
+            "Extract the company name, approximation of the number of employees, and " +
+            "the industry or sector the company operates in based on this content " +
             "or from your own knowledge about this company if the webpage doesn't mention it.",
         domain, truncatedContent
     );
 
     String systemPrompt =
         "You are an expert at extracting structured information from webpages. " +
-            "Extract the company name and number of employees (if available). " +
-            "Return ONLY a valid JSON object with keys 'companyName' (string) and 'numberOfEmployees' (integer or null). " +
-            "If the number of employees is not mentioned or unclear, set it to null. " +
-            "Example: {\"companyName\": \"Acme Corp\", \"numberOfEmployees\": 500} " +
-            "or {\"companyName\": \"Acme Corp\", \"numberOfEmployees\": null}";
+            "Extract the company name, number of employees (if available), and industry/sector. " +
+            "Return ONLY a valid JSON object with keys 'companyName' (string), 'numberOfEmployees' (integer or null), " +
+            "and 'industry' (string or null). " +
+            "If the number of employees or industry is not mentioned or unclear, set it to null. " +
+            "Example: {\"companyName\": \"Acme Corp\", \"numberOfEmployees\": 500, \"industry\": \"Technology\"} " +
+            "or {\"companyName\": \"Acme Corp\", \"numberOfEmployees\": null, \"industry\": \"Retail\"} " +
+            "or {\"companyName\": \"Acme Corp\", \"numberOfEmployees\": 500, \"industry\": null}";
 
     try {
       String response = geminiClient.generateContent(prompt, systemPrompt);
@@ -138,14 +142,20 @@ public class WebPageProcessingService {
           }
         }
 
-        return new CompanyInfo(companyName, numberOfEmployees);
+        // Extract the industry from the JSON
+        String industry = null;
+        if (!jsonNode.path("industry").isNull() && !jsonNode.path("industry").asText().isEmpty()) {
+          industry = jsonNode.path("industry").asText();
+        }
+
+        return new CompanyInfo(companyName, numberOfEmployees, industry);
       } else {
         // Fallback if no valid JSON found
         logger.warn("No valid JSON found in Gemini response: {}", response);
         // Use the domain name as a fallback company name
         String fallbackName =
             domain.replaceAll("www\\.", "").replaceAll("\\.com|\\.org|\\.net", "");
-        return new CompanyInfo(fallbackName, null);
+        return new CompanyInfo(fallbackName, null, null);
       }
     } catch (Exception e) {
       logger.error("Error extracting company info using Gemini", e);
@@ -154,7 +164,7 @@ public class WebPageProcessingService {
       String fallbackName = domain.replaceAll("www\\.", "").replaceAll("\\.com|\\.org|\\.net", "");
       fallbackName = fallbackName.substring(0, 1).toUpperCase() + fallbackName.substring(1);
 
-      return new CompanyInfo(fallbackName, null);
+      return new CompanyInfo(fallbackName, null, null);
     }
   }
 }

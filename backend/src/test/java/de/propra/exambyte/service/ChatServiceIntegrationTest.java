@@ -64,7 +64,16 @@ public class ChatServiceIntegrationTest {
     when(userRepository.save(any(AppUser.class))).thenReturn(testUser);
 
     // Configure mock recommendations for the recommendation phase
-    Person mockPerson = new Person(1L, "Mock Expert");
+    Person mockPerson = new Person(
+        1L,
+        "Academia",
+        "University of St.Gallen (HSG)",
+        "School of Management (SoM-HSG)",
+        "Research and teaching in business administration, strategy, and innovation.",
+        "Business Strategy, Innovation, Leadership",
+        "som@unisg.ch",
+        "https://som.unisg.ch"
+    );
     Event mockEvent = new Event(
         1L,
         "Mock Event",
@@ -221,7 +230,8 @@ public class ChatServiceIntegrationTest {
     // When - Process a conversation with multiple exchanges
     for (String message : userMessages) {
       // Update the mocked user with the current conversation history
-      AppUser currentUser = new AppUser(TEST_USER_ID, TEST_USERNAME, null, new ArrayList<>(conversationHistory));
+      AppUser currentUser =
+          new AppUser(TEST_USER_ID, TEST_USERNAME, null, new ArrayList<>(conversationHistory));
       when(userRepository.findById(TEST_USER_ID)).thenReturn(Optional.of(currentUser));
 
       // Process the message

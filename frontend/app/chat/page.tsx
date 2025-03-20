@@ -87,12 +87,14 @@ export default function ChatPage() {
     if (companyData) {
       try {
         const parsedData = JSON.parse(companyData);
-        // Add initial context message about the company
+        // Add initial context message about the company, now including industry if available
+        const industryInfo = parsedData.industry ? ` in der Branche "${parsedData.industry}"` : '';
+        
         setMessages(prev => [
           ...prev,
           {
             id: prev.length + 1,
-            text: `Ich bin hier, um Ihnen mit Innovationsfragen zu helfen. Sie haben die Firma "${parsedData.companyName || 'Ihre Firma'}" angegeben.`,
+            text: `Ich bin hier, um Ihnen mit Innovationsfragen zu helfen. Sie haben die Firma "${parsedData.companyName || 'Ihre Firma'}"${industryInfo} angegeben.`,
             isUser: false,
             timestamp: new Date(Date.now() + 500),
           }

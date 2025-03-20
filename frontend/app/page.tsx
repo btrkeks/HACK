@@ -12,6 +12,7 @@ import ChoiceDialog from "@/components/choice-dialog"
 interface CompanyData {
   companyName: string | null;
   numberOfEmployees: number | null;
+  industry: string | null; // Added industry field
 }
 
 export default function MainPage() {
@@ -101,4 +102,3 @@ export default function MainPage() {
     </div>
   )
 }
-
