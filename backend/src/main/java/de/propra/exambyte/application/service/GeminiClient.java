@@ -11,10 +11,13 @@ import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
 /**
  * Client for interacting with Google's Gemini AI API.
  */
+@Component
 public class GeminiClient {
   private final String apiKey = "AIzaSyDSedoiicCf4jf-Fy-mcZgbRJc-eyfTMHA";
   private final HttpClient httpClient;

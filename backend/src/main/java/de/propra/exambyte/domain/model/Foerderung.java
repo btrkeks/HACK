@@ -5,7 +5,7 @@ import java.util.UUID;
 import org.springframework.data.annotation.Id;
 
 public record Foerderung(@Id
-                         UUID id,
+                         Long id,
                          String name,
                          String beschreibung,
                          LocalDateTime date,

@@ -1,4 +1,7 @@
 package de.propra.exambyte.domain.model;
 
-public record Person(String name) {
+import java.util.UUID;
+import org.springframework.data.annotation.Id;
+
+public record Person(@Id Long id, String name) {
 }

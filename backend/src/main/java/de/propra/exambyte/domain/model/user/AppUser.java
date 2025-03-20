@@ -11,18 +11,20 @@ public class AppUser {
   @Id
   private final Long id;
   private final String username;
+  private CompanyInfo companyInfo;
 
   private final List<ChatHistory> messages;
 
   @PersistenceCreator
-  public AppUser(Long id, String username, List<ChatHistory> messages) {
+  public AppUser(Long id, String username, CompanyInfo companyInfo, List<ChatHistory> messages) {
     this.id = id;
     this.username = username;
+    this.companyInfo = companyInfo;
     this.messages = messages;
   }
 
   public AppUser(String username) {
-    this(null, username, new ArrayList<>());
+    this(null, username, null, new ArrayList<>());
   }
 
   public Long getId() {
@@ -35,5 +37,9 @@ public class AppUser {
 
   public String getUsername() {
     return username;
+  }
+
+  public CompanyInfo getCompanyInfo() {
+    return companyInfo;
   }
 }

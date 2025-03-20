@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 import org.springframework.data.annotation.Id;
 
-public record Event(@Id UUID id,
+public record Event(@Id Long id,
                     String name,
                     LocalDateTime zeitPunkt,
                     String Adresse,
