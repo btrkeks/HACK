@@ -26,7 +26,8 @@ export default function MainPage() {
       <InteractiveBackground />
 
       <div className="w-full max-w-md p-8 bg-white/90 backdrop-blur-md rounded-lg shadow-lg z-10 border border-primary/20">
-        <h1 className="text-2xl font-semibold mb-6 text-center text-primary">Willkommen bei unserer App</h1>
+        <h1 className="text-2xl font-semibold mb-6 text-center text-primary">Willkommen beim Innovationsberater des Kanton St.Gallen</h1>
+        <p className="text-sm text-center mb-6 text-gray-700">Füge die Website deiner Firma ein um uns ein Onbaording zu erleichtern und starte den Prozess!</p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <Input
