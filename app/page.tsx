@@ -9,16 +9,48 @@ import Button from "@/components/ui/button"
 import InteractiveBackground from "@/components/interactive-background"
 import ChoiceDialog from "@/components/choice-dialog"
 
+interface CompanyData {
+  companyName: string | null;
+  numberOfEmployees: number | null;
+}
+
 export default function MainPage() {
   const [url, setUrl] = useState("")
   const [dialogOpen, setDialogOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [companyData, setCompanyData] = useState<CompanyData | null>(null)
+  const [error, setError] = useState<string | null>(null)
   const router = useRouter()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("URL submitted:", url)
-    // Instead of directly navigating, open the dialog
-    setDialogOpen(true)
+    setIsLoading(true)
+    setError(null)
+    
+    // Make sure URL has http/https prefix
+    let processUrl = url;
+    if (!processUrl.startsWith('http://') && !processUrl.startsWith('https://')) {
+      processUrl = 'https://' + processUrl;
+    }
+    
+    try {
+      // Call our internal Next.js API route instead of the backend directly
+      const response = await fetch(`/api/process-webpage?url=${encodeURIComponent(processUrl)}`);
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || `Error: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      setCompanyData(data);
+      setDialogOpen(true);
+    } catch (err) {
+      console.error('Error fetching data:', err);
+      setError(err instanceof Error ? err.message : 'Failed to process URL');
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -39,14 +71,23 @@ export default function MainPage() {
             className="border-primary/30 focus:border-primary"
           />
 
-          <Button type="submit" className="w-full">
-            Starten
+          <Button type="submit" className="w-full" disabled={isLoading}>
+            {isLoading ? 'Wird verarbeitet...' : 'Starten'}
           </Button>
+          
+          {error && (
+            <p className="text-red-500 text-sm text-center mt-2">{error}</p>
+          )}
         </form>
       </div>
 
-      {/* Add the choice dialog */}
-      <ChoiceDialog open={dialogOpen} onOpenChange={setDialogOpen} />
+      {/* Pass company data to the choice dialog */}
+      <ChoiceDialog 
+        open={dialogOpen} 
+        onOpenChange={setDialogOpen} 
+        companyData={companyData} 
+        onCompanyDataChange={setCompanyData} 
+      />
     </div>
   )
 }
