@@ -42,4 +42,8 @@ public class AppUser {
   public CompanyInfo getCompanyInfo() {
     return companyInfo;
   }
+
+  public CompanyInfo setCompanyInfo(CompanyInfo companyInfo) {
+    this.companyInfo = companyInfo;
+  }
 }
