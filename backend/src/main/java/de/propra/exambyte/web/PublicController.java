@@ -10,9 +10,12 @@ import de.propra.exambyte.domain.model.Event;
 import de.propra.exambyte.domain.model.Foerderung;
 import de.propra.exambyte.domain.model.Person;
 import de.propra.exambyte.domain.model.user.AppUser;
+import de.propra.exambyte.domain.model.user.ChatHistory;
 import de.propra.exambyte.domain.model.user.CompanyInfo;
 import de.propra.exambyte.web.dto.ChatRequest;
 import de.propra.exambyte.web.dto.ChatResponse;
+import jakarta.validation.constraints.Positive;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +37,8 @@ public class PublicController {
   private ChatService chatService;
   @Autowired
   private CompanyInfoService companyInfoService;
+  @Autowired
+  private UserRepository userRepository;
 
   @GetMapping("/process-webpage")
   public ResponseEntity<CompanyInfo> processWebPage(String url) {
@@ -56,5 +61,11 @@ public class PublicController {
       logger.warn("Error updating company info for {}", userId);
     }
     return result;
+  }
+
+  @GetMapping("/chat-history")
+  public List<ChatHistory> getChatHistory(Long userId) {
+    AppUser user = userRepository.findById(userId).orElseThrow();
+    return user.getMessages();
   }
 }
