@@ -31,6 +31,12 @@ export default function Header() {
             Chat
           </Link>
           <Link
+            href="/call"
+            className={`${pathname === "/call" ? "text-primary font-medium" : "text-gray-500"} hover:text-primary`}
+          >
+            Telefonieren
+          </Link>
+          <Link
             href="/recommendation"
             className={`${pathname === "/recommendation" ? "text-primary font-medium" : "text-gray-500"} hover:text-primary`}
           >

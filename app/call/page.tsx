@@ -66,11 +66,15 @@ export default function CallPage() {
     return date.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" });
   };
 
+  // This is now a manual tracker for demo purposes
+  // In a real implementation, you would integrate with Twilio's status callbacks
   const handleStartCall = () => {
+    // Simulating a user manually calling the displayed phone number
     setIsCallActive(true);
   };
 
   const handleEndCall = () => {
+    // Simulating hanging up the phone
     setIsCallActive(false);
   };
 
@@ -113,52 +117,47 @@ export default function CallPage() {
 
         <div className="flex-1 flex flex-col items-center justify-center p-4">
           <div className="text-center mb-8">
-            {isCallActive ? (
-              <div className="space-y-4">
-                <div className="w-32 h-32 rounded-full bg-primary/10 flex items-center justify-center mx-auto">
-                  <Phone className="h-16 w-16 text-primary" />
-                </div>
-                <h2 className="text-2xl font-medium text-gray-800">KI Berater</h2>
-                <p className="text-gray-600">Anruf aktiv</p>
-                <p className="text-xl font-medium text-primary">{formatDuration(callDuration)}</p>
+            <div className="space-y-4">
+              <div className="w-32 h-32 rounded-full bg-primary/10 flex items-center justify-center mx-auto">
+                <Phone className="h-16 w-16 text-primary" />
               </div>
-            ) : (
-              <div className="space-y-4">
-                <div className="w-32 h-32 rounded-full bg-gray-100 flex items-center justify-center mx-auto">
-                  <Phone className="h-16 w-16 text-gray-400" />
+              <h2 className="text-2xl font-medium text-gray-800">KI Berater Telefon</h2>
+              <p className="text-gray-600">Rufen Sie unseren KI Berater direkt an:</p>
+              <p className="text-2xl font-bold text-primary">+1 (555) 123-4567</p>
+              {/* Replace with your actual Twilio phone number */}
+              <div className="mt-4 max-w-md mx-auto">
+                <p className="text-sm text-gray-600">
+                  Rufen Sie diese Nummer an, um mit unserem KI-Berater zu sprechen. 
+                  Das Gespräch wird über Twilio und ElevenLabs vermittelt.
+                </p>
+                
+                <div className="mt-6">
+                  <Button 
+                    className="bg-primary hover:bg-primary/90" 
+                    onClick={handleStartCall}
+                  >
+                    Anruf simulieren <Phone className="h-4 w-4 ml-2" />
+                  </Button>
+                  <p className="text-xs text-gray-500 mt-2">
+                    (Nur für Testzwecke - simuliert einen Anruf in der Benutzeroberfläche)
+                  </p>
                 </div>
-                <h2 className="text-2xl font-medium text-gray-800">KI Berater</h2>
-                <p className="text-gray-600">Klicken Sie auf "Anruf starten", um mit dem KI Berater zu telefonieren</p>
               </div>
-            )}
+            </div>
           </div>
 
-          <div className="flex gap-4">
-            {isCallActive ? (
-              <>
-                <Button
-                  variant="outline"
-                  className="rounded-full w-14 h-14 p-0 flex items-center justify-center"
-                  onClick={toggleMute}
-                >
-                  {isMuted ? <MicOff className="h-6 w-6" /> : <Mic className="h-6 w-6" />}
-                </Button>
-                <Button
-                  className="rounded-full w-14 h-14 p-0 flex items-center justify-center bg-red-500 hover:bg-red-600"
-                  onClick={handleEndCall}
-                >
-                  <PhoneOff className="h-6 w-6" />
-                </Button>
-              </>
-            ) : (
+          {isCallActive && (
+            <div className="border-t border-gray-200 pt-8 mt-4 text-center">
+              <p className="text-gray-600 mb-2">Aktiver Anruf</p>
+              <p className="text-xl font-medium text-primary mb-4">{formatDuration(callDuration)}</p>
               <Button
-                className="rounded-full w-14 h-14 p-0 flex items-center justify-center"
-                onClick={handleStartCall}
+                className="rounded-full bg-red-500 hover:bg-red-600"
+                onClick={handleEndCall}
               >
-                <Phone className="h-6 w-6" />
+                Anruf beenden <PhoneOff className="h-5 w-5 ml-2" />
               </Button>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
