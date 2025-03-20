@@ -33,7 +33,9 @@ CREATE TABLE person
 CREATE TABLE app_user
 (
     id       serial primary key,
-    username VARCHAR(255)
+    username VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    email    VARCHAR(255) NOT NULL UNIQUE
 );
 
 -- Create ChatHistory table

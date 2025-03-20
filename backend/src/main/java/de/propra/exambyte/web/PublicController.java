@@ -2,6 +2,7 @@ package de.propra.exambyte.web;
 
 import de.propra.exambyte.application.repository.UserRepository;
 import de.propra.exambyte.application.service.AiService;
+import de.propra.exambyte.application.service.AuthService;
 import de.propra.exambyte.application.service.ChatService;
 import de.propra.exambyte.application.service.CompanyInfoService;
 import de.propra.exambyte.application.service.GetFittingService;
@@ -12,8 +13,11 @@ import de.propra.exambyte.domain.model.Person;
 import de.propra.exambyte.domain.model.user.AppUser;
 import de.propra.exambyte.domain.model.user.ChatHistory;
 import de.propra.exambyte.domain.model.user.CompanyInfo;
+import de.propra.exambyte.web.dto.AuthRequest;
+import de.propra.exambyte.web.dto.AuthResponse;
 import de.propra.exambyte.web.dto.ChatRequest;
 import de.propra.exambyte.web.dto.ChatResponse;
+import de.propra.exambyte.web.dto.RegisterRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.Positive;
@@ -44,10 +48,12 @@ public class PublicController {
   private CompanyInfoService companyInfoService;
   @Autowired
   private UserRepository userRepository;
+  @Autowired
+  private AuthService authService;
 
   @GetMapping("/process-webpage")
-  public ResponseEntity<CompanyInfo> processWebPage(String url) {
-    CompanyInfo info = webPageProcessingService.processWebpage(1L, url);
+  public ResponseEntity<CompanyInfo> processWebPage(String url, Long userId) {
+    CompanyInfo info = webPageProcessingService.processWebpage(userId, url);
     if (info == null) {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
@@ -56,7 +62,7 @@ public class PublicController {
 
   @PostMapping("/chat")
   public ChatResponse chat(@RequestBody ChatRequest chatRequest) {
-    return chatService.processChatMessage(1L, chatRequest.message());
+    return chatService.processChatMessage(chatRequest.userId(), chatRequest.message());
   }
 
   @PostMapping("/update-company-info")
@@ -70,8 +76,28 @@ public class PublicController {
 
   @GetMapping("/chat-history")
   public List<ChatHistory> getChatHistory(Long userId) {
-    AppUser user = userRepository.findById(1L).orElseThrow();
+    AppUser user = userRepository.findById(userId).orElseThrow();
     return user.getMessages();
+  }
+  
+  @PostMapping("/register")
+  public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
+    try {
+      AuthResponse response = authService.register(request);
+      return ResponseEntity.ok(response);
+    } catch (RuntimeException e) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+  }
+  
+  @PostMapping("/login")
+  public ResponseEntity<AppUser> login(@RequestBody AuthRequest request) {
+    try {
+      AppUser user = authService.login(request);
+      return ResponseEntity.ok(user);
+    } catch (RuntimeException e) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
   }
   
   /**
@@ -86,7 +112,7 @@ public class PublicController {
     // Create TwiML response
     return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
            "<Response>" +
-           "<Say voice=\"Polly.Marlene\">Willkommen beim KI Berater. Wie kann ich Ihnen heute helfen?</Say>" +
+           "<Say voice=\"Polly.Marlene\">Willkommen beim Innovation Coach. Wie kann ich Ihnen heute helfen?</Say>" +
            "<Gather input=\"speech\" action=\"/twilio/process-input\" method=\"POST\" speechTimeout=\"auto\" language=\"de-DE\">" +
            "<Say voice=\"Polly.Marlene\">Bitte teilen Sie mir Ihre Frage mit.</Say>" +
            "</Gather>" +

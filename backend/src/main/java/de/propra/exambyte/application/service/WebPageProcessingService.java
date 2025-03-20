@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.propra.exambyte.application.repository.UserRepository;
 import de.propra.exambyte.domain.model.user.AppUser;
 import de.propra.exambyte.domain.model.user.CompanyInfo;
+import java.util.NoSuchElementException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,16 +37,8 @@ public class WebPageProcessingService {
     try {
       // 1. Fetch the user or create a new one if not found
       Optional<AppUser> userOptional = userRepository.findById(userId);
-      AppUser user;
-      if (userOptional.isEmpty()) {
-        logger.info("User with ID {} not found. Creating a new user.", userId);
-        // Create a new user with default values
-        user = new AppUser("user_");
-        // Save the new user to the repository
-        userRepository.save(user);
-      } else {
-        user = userOptional.get();
-      }
+      AppUser user = userOptional.orElseThrow(() ->
+          new NoSuchElementException("User with ID " + userId + " not found"));
 
       // 2. Download the webpage content
       String webpageContent = downloadWebpage(url);
@@ -56,16 +49,10 @@ public class WebPageProcessingService {
       logger.info("Extracted company info: {}", companyInfo);
 
       // 4. Create a new user with the updated company info
-      // Since AppUser is immutable for company info updates, we need to create a new instance
-      AppUser updatedUser = new AppUser(
-          user.getId(),
-          user.getUsername(),
-          companyInfo,
-          user.getMessages() != null ? new ArrayList<>(user.getMessages()) : new ArrayList<>()
-      );
+      user.setCompanyInfo(companyInfo);
 
       // 5. Save the updated user
-      userRepository.save(updatedUser);
+      userRepository.save(user);
       logger.info("Updated user {} with company info", userId);
 
       return companyInfo;
