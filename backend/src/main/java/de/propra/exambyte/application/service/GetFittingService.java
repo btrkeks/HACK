@@ -39,8 +39,16 @@ public class GetFittingService {
     AppUser user = appUserRepository.findById(userId).orElse(null);
     if (user == null) {
       // Return a default person if user not found
-      return new Person(1L, "Dr. Maria Schmidt");
-    }
+      return new Person(
+          1L,
+          "Academia",
+          "University of St.Gallen (HSG)",
+          "School of Management (SoM-HSG)",
+          "Research and teaching in business administration, strategy, and innovation.",
+          "Business Strategy, Innovation, Leadership",
+          "som@unisg.ch",
+          "https://som.unisg.ch"
+      );    }
 
     // Get all available persons
     Iterable<Person> allPersons = personRepository.findAll();
@@ -49,7 +57,16 @@ public class GetFittingService {
 
     if (personList.isEmpty()) {
       // Return default if no persons available
-      return new Person(1L, "Dr. Maria Schmidt");
+      return new Person(
+          1L,
+          "Academia",
+          "University of St.Gallen (HSG)",
+          "School of Management (SoM-HSG)",
+          "Research and teaching in business administration, strategy, and innovation.",
+          "Business Strategy, Innovation, Leadership",
+          "som@unisg.ch",
+          "https://som.unisg.ch"
+      );
     }
 
     // Prepare system prompt
@@ -124,7 +141,16 @@ public class GetFittingService {
     }
 
     // Default fallback
-    return new Person(1L, "Dr. Maria Schmidt");
+    return new Person(
+        1L,
+        "Academia",
+        "University of St.Gallen (HSG)",
+        "School of Management (SoM-HSG)",
+        "Research and teaching in business administration, strategy, and innovation.",
+        "Business Strategy, Innovation, Leadership",
+        "som@unisg.ch",
+        "https://som.unisg.ch"
+    );
   }
 
   public Event getFittingEvent(Long userId) {

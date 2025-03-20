@@ -25,8 +25,14 @@ CREATE TABLE foerderung
 -- Create Person table
 CREATE TABLE person
 (
-    id   serial PRIMARY KEY,
-    name VARCHAR(255) NOT NULL
+    id          serial PRIMARY KEY,
+    category    VARCHAR(255),
+    institution VARCHAR(255),
+    name        VARCHAR(255) NOT NULL,
+    description TEXT,
+    focus_areas VARCHAR(255),
+    contact     VARCHAR(255),
+    website     VARCHAR(255)
 );
 
 -- Create User table
