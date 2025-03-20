@@ -124,7 +124,7 @@ export default function CallPage() {
               <h2 className="text-2xl font-medium text-gray-800">KI Berater Telefon</h2>
               <p className="text-gray-600">Rufen Sie unseren KI Berater direkt an:</p>
               <p className="text-2xl font-bold text-primary">+1 (555) 123-4567</p>
-              {/* Replace with your actual Twilio phone number */}
+              +1 220 215 6466
               <div className="mt-4 max-w-md mx-auto">
                 <p className="text-sm text-gray-600">
                   Rufen Sie diese Nummer an, um mit unserem KI-Berater zu sprechen. 
