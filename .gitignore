@@ -30,3 +30,4 @@ backend/project_dump.txt
 backend/.idea
 backend/.gradle
 backend/build
+backend/data
