@@ -34,12 +34,16 @@ export default function ChoiceDialog({ open, onOpenChange, companyData, onCompan
 
   const handleChatClick = () => {
     onCompanyDataChange(localCompanyData)
+    // Store company data in localStorage for access in chat page
+    localStorage.setItem('companyData', JSON.stringify(localCompanyData))
     router.push("/chat")
     onOpenChange(false)
   }
 
   const handleCallClick = () => {
     onCompanyDataChange(localCompanyData)
+    // Store company data in localStorage for access in call page
+    localStorage.setItem('companyData', JSON.stringify(localCompanyData))
     router.push("/call")
     onOpenChange(false)
   }
