@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  database:
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - "POSTGRES_DB=hack"
+      - "POSTGRES_USER=hack"
+      - "POSTGRES_PASSWORD=hack"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hack"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/hack
+      - SPRING_DATASOURCE_USERNAME=hack
+      - SPRING_DATASOURCE_PASSWORD=hack
+      - GEMINI_API_KEY=AIzaSyDSedoiicCf4jf-Fy-mcZgbRJc-eyfTMHA
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-your_openai_api_key}
+    depends_on:
+      database:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 40s
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8080
+    depends_on:
+      backend:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  postgres_data:
+    driver: local

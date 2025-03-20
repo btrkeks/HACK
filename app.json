@@ -1,0 +1,27 @@
+{
+  "name": "HACK",
+  "description": "A full-stack application with Spring Boot backend and Next.js frontend",
+  "repository": "https://github.com/your-username/HACK",
+  "buildpacks": [
+    {
+      "url": "heroku/java"
+    }
+  ],
+  "env": {
+    "SPRING_PROFILES_ACTIVE": {
+      "description": "The Spring profile to use",
+      "value": "prod"
+    },
+    "GEMINI_API_KEY": {
+      "description": "API key for Gemini AI service",
+      "value": "AIzaSyDSedoiicCf4jf-Fy-mcZgbRJc-eyfTMHA"
+    },
+    "OPENAI_API_KEY": {
+      "description": "API key for OpenAI service",
+      "required": true
+    }
+  },
+  "addons": [
+    "heroku-postgresql:hobby-dev"
+  ]
+}

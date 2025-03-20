@@ -1,12 +1,3 @@
-logging:
-  level:
-    de:
-      propra:
-        exambyte:
-          application:
-            service:
-              WebPageProcessingService: DEBUG
-
 spring:
   datasource:
     password: hack

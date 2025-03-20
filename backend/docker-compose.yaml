@@ -1,11 +1,1 @@
-services:
-  database:
-    image: postgres:15-alpine
-    ports:
-      - "5432:5432"
-    volumes:
-      - ./data:/var/lib/postgresql/data
-    environment:
-      - "POSTGRES_DB=hack"
-      - "POSTGRES_USER=hack"
-      - "POSTGRES_PASSWORD=hack"
+# This file is deprecated. Please use the root docker-compose.yaml instead.
