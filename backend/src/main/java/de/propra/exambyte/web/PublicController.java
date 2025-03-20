@@ -46,7 +46,7 @@ public class PublicController {
 
   @PostMapping("/chat")
   public ChatResponse chat(@RequestBody ChatRequest chatRequest) {
-    return chatService.processChatMessage(chatRequest.userId(), chatRequest.message());
+    return chatService.processChatMessage(1L, chatRequest.message());
   }
 
   @PostMapping("/update-company-info")

@@ -43,7 +43,7 @@ public class AppUser {
     return companyInfo;
   }
 
-  public CompanyInfo setCompanyInfo(CompanyInfo companyInfo) {
+  public void setCompanyInfo(CompanyInfo companyInfo) {
     this.companyInfo = companyInfo;
   }
 }
