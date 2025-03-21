@@ -114,7 +114,7 @@ public class ChatService {
       userPrompt.append(message.role()).append(": ").append(message.content()).append("\n\n");
     }
 
-    userPrompt.append("Based on this conversation, summarize the key innovation challenges you've identified. " +
+    userPrompt.append("You always adapt your language to the language of the user. Based on this conversation, summarize the key innovation challenges you've identified. " +
         "Then, let the CEO know you're going to recommend a person to meet with and an event to attend that could " +
         "help address these challenges. Don't make specific recommendations yet as those will be provided separately.");
 
