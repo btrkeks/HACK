@@ -18,7 +18,7 @@ public class ChatService {
   private final GetFittingService getFittingService;
 
   // Number of questions before making recommendations
-  private static final int MAX_QUESTIONS = 4;
+  private static final int MAX_QUESTIONS = 0;
 
   @Autowired
   public ChatService(UserRepository userRepository,
@@ -88,7 +88,8 @@ public class ChatService {
     }
 
     userPrompt.append("Based on this conversation, ask ONE thoughtful follow-up question to help understand " +
-        "the CEO's innovation challenges better. Don't summarize or introduce yourself again, just ask your next question.");
+        "the CEO's innovation challenges better. Don't summarize or introduce yourself again, just " +
+        "ask your next question. Try to be concise and always adapt your language to the language of the user.");
 
     try {
       return geminiClient.generateContent(userPrompt.toString(), systemPrompt);
@@ -99,9 +100,11 @@ public class ChatService {
   }
 
   private String generateRecommendationResponse(AppUser user) {
-    String systemPrompt = "You are an Innovation Coach helping a CEO with business innovation. " +
+    String systemPrompt = "You are an innovation Coach helping a CEO with business innovation who " +
+        "tries to be concise and always adapts his language to the language of the user. " +
         "Based on the conversation, summarize the key challenges you've identified and explain that " +
-        "you're now going to recommend resources to help.";
+        "you're now going to recommend resources to help. Try to be concise and always adapt your " +
+        "language to the language of the user.";
 
     StringBuilder userPrompt = new StringBuilder();
     userPrompt.append("Conversation with CEO:\n\n");

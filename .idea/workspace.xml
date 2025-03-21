@@ -4,17 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95d79dcb-4fcb-49ef-85e4-6914b325d4e8" name="Changes" comment="Update backend auth">
+    <list default="true" id="95d79dcb-4fcb-49ef-85e4-6914b325d4e8" name="Changes" comment="Fix login issues">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/de/propra/exambyte/web/PublicController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/de/propra/exambyte/web/PublicController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/api/login/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/api/login/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/call/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/call/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/chat/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/chat/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/recommendations/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/recommendations/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/components/header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/de/propra/exambyte/application/service/ChatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/de/propra/exambyte/application/service/ChatService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/login/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/login/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/register/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/register/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +62,8 @@
       <workItem from="1742513053981" duration="1418000" />
       <workItem from="1742515523995" duration="1563000" />
       <workItem from="1742517326467" duration="161000" />
-      <workItem from="1742518104196" duration="316000" />
+      <workItem from="1742518104196" duration="2790000" />
+      <workItem from="1742523629096" duration="772000" />
     </task>
     <task id="LOCAL-00001" summary="Push backend">
       <option name="closed" value="true" />
@@ -94,7 +89,31 @@
       <option name="project" value="LOCAL" />
       <updated>1742515536024</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Start implementing login">
+      <option name="closed" value="true" />
+      <created>1742518550978</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1742518550979</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Remove name input box and show username">
+      <option name="closed" value="true" />
+      <created>1742518938328</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1742518938328</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Fix login issues">
+      <option name="closed" value="true" />
+      <created>1742519797973</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1742519797973</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -105,6 +124,9 @@
     <MESSAGE value="Update backend" />
     <MESSAGE value="Implement extracting industry and remove call button" />
     <MESSAGE value="Update backend auth" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update backend auth" />
+    <MESSAGE value="Start implementing login" />
+    <MESSAGE value="Remove name input box and show username" />
+    <MESSAGE value="Fix login issues" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix login issues" />
   </component>
 </project>

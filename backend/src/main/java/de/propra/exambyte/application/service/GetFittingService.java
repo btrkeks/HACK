@@ -48,7 +48,8 @@ public class GetFittingService {
           "Business Strategy, Innovation, Leadership",
           "som@unisg.ch",
           "https://som.unisg.ch"
-      );    }
+      );
+    }
 
     // Get all available persons
     Iterable<Person> allPersons = personRepository.findAll();
