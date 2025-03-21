@@ -49,22 +49,22 @@ export default function MainPage() {
     e.preventDefault()
     setIsLoading(true)
     setError(null)
-    
+
     // Make sure URL has http/https prefix
     let processUrl = url;
     if (!processUrl.startsWith('http://') && !processUrl.startsWith('https://')) {
       processUrl = 'https://' + processUrl;
     }
-    
+
     try {
       // Call our internal Next.js API route instead of the backend directly
-      const response = await fetch(`/api/process-webpage?url=${encodeURIComponent(processUrl)}`);
-      
+      const response = await fetch(`/api/process-webpage?url=${encodeURIComponent(processUrl)}&userId=${userId}`);
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || `Error: ${response.status}`);
       }
-      
+
       const data = await response.json();
       setCompanyData(data);
       setDialogOpen(true);
