@@ -103,8 +103,7 @@ public class ChatService {
     String systemPrompt = "You are an innovation Coach helping a CEO with business innovation who " +
         "tries to be concise and always adapts his language to the language of the user. " +
         "Based on the conversation, summarize the key challenges you've identified and explain that " +
-        "you're now going to recommend resources to help. Try to be concise and always adapt your " +
-        "language to the language of the user.";
+        "you're now going to recommend resources to help.";
 
     StringBuilder userPrompt = new StringBuilder();
     userPrompt.append("Conversation with CEO:\n\n");

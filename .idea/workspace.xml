@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95d79dcb-4fcb-49ef-85e4-6914b325d4e8" name="Changes" comment="Checkpoint">
-      <change beforePath="$PROJECT_DIR$/frontend/components/header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/header.tsx" afterDir="false" />
+    <list default="true" id="95d79dcb-4fcb-49ef-85e4-6914b325d4e8" name="Changes" comment="Adjust prompt">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/de/propra/exambyte/application/service/ChatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/de/propra/exambyte/application/service/ChatService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/recommendations/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/recommendations/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +62,7 @@
       <workItem from="1742515523995" duration="1563000" />
       <workItem from="1742517326467" duration="161000" />
       <workItem from="1742518104196" duration="2790000" />
-      <workItem from="1742523629096" duration="1574000" />
+      <workItem from="1742523629096" duration="3242000" />
     </task>
     <task id="LOCAL-00001" summary="Push backend">
       <option name="closed" value="true" />
@@ -118,7 +120,23 @@
       <option name="project" value="LOCAL" />
       <updated>1742524521564</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Final">
+      <option name="closed" value="true" />
+      <created>1742538519637</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1742538519637</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Adjust prompt">
+      <option name="closed" value="true" />
+      <created>1742539094888</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1742539094888</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -133,6 +151,8 @@
     <MESSAGE value="Remove name input box and show username" />
     <MESSAGE value="Fix login issues" />
     <MESSAGE value="Checkpoint" />
-    <option name="LAST_COMMIT_MESSAGE" value="Checkpoint" />
+    <MESSAGE value="Final" />
+    <MESSAGE value="Adjust prompt" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adjust prompt" />
   </component>
 </project>

@@ -47,6 +47,7 @@ export default function RecommendationsPage() {
     event: null,
     foerderung: null
   })
+  const [userName, setUserName] = useState<string>("")
 
   useEffect(() => {
     // Get recommendations from localStorage
@@ -56,6 +57,19 @@ export default function RecommendationsPage() {
         setRecommendations(JSON.parse(storedRecommendations))
       } catch (e) {
         console.error("Error parsing recommendations:", e)
+      }
+    }
+
+    // Try to get user info for email signature
+    const userData = localStorage.getItem('userData')
+    if (userData) {
+      try {
+        const parsedData = JSON.parse(userData)
+        if (parsedData.username) {
+          setUserName(parsedData.username)
+        }
+      } catch (e) {
+        console.error("Error parsing user data:", e)
       }
     }
   }, [])
@@ -77,6 +91,25 @@ export default function RecommendationsPage() {
 
   const handleBackClick = () => {
     router.push('/chat')
+  }
+
+  // Create email subject and body for the contact request
+  const createEmailContent = (personName: string) => {
+    const subject = "Anfrage nach Beratung zu KI-Innovation"
+    const body = `Sehr geehrte(r) ${personName},
+
+Ich wurde über die Innovationsberater-Plattform des Kanton St.Gallen auf Sie aufmerksam gemacht und würde gerne mehr über Ihre Expertise im Bereich künstlicher Intelligenz erfahren.
+
+Aktuell suche ich nach Möglichkeiten, KI-Technologien in meinem Unternehmen zu implementieren und würde mich über einen Austausch mit Ihnen freuen.
+
+Wäre es möglich, einen Termin für ein Gespräch zu vereinbaren?
+
+Mit freundlichen Grüßen,
+${userName || ""}
+`
+
+    // Encode the subject and body for use in mailto link
+    return `?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
   }
 
   return (
@@ -101,7 +134,10 @@ export default function RecommendationsPage() {
                             <p key={key} className="text-gray-700">
                               <span className="font-medium">{key}:</span>{' '}
                               {isEmail ? (
-                                  <a href={`mailto:${value}`} className="text-primary hover:underline">
+                                  <a
+                                      href={`mailto:${value}${createEmailContent(recommendations.person.name)}`}
+                                      className="text-primary hover:underline"
+                                  >
                                     {value}
                                   </a>
                               ) : (
