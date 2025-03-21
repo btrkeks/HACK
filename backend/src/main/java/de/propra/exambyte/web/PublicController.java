@@ -32,6 +32,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -79,7 +80,7 @@ public class PublicController {
     AppUser user = userRepository.findById(userId).orElseThrow();
     return user.getMessages();
   }
-  
+
   @PostMapping("/register")
   public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
     try {
@@ -89,17 +90,28 @@ public class PublicController {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
   }
-  
-  @PostMapping("/login")
-  public ResponseEntity<AppUser> login(@RequestBody AuthRequest request) {
-    try {
-      AppUser user = authService.login(request);
-      return ResponseEntity.ok(user);
-    } catch (RuntimeException e) {
-      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-    }
+
+  @GetMapping("/user")
+  public ResponseEntity<AppUser> getCurrentUser(@RequestParam Long userId) {
+    // Find the user
+    AppUser user = userRepository.findById(userId)
+        .orElseThrow(() -> new RuntimeException("User not found"));
+
+    return ResponseEntity.ok(user);
   }
-  
+
+  @PostMapping("/login")
+  public AuthResponse login(AuthRequest request) {
+    AppUser user = userRepository.findByUsername(request.username())
+        .orElseThrow(() -> new RuntimeException("Invalid username or password"));
+
+    if (!request.password().equals(user.getPassword())) {
+      throw new RuntimeException("Invalid username or password");
+    }
+
+    return new AuthResponse(user.getId());
+  }
+
   /**
    * Endpoint for Twilio to call when a user calls the Twilio phone number.
    * Returns TwiML instructions for Twilio to handle the call.
@@ -108,17 +120,17 @@ public class PublicController {
   @ResponseBody
   public String handleIncomingCall(HttpServletRequest request, HttpServletResponse response) {
     logger.info("Incoming call received from: {}", request.getParameter("From"));
-    
+
     // Create TwiML response
     return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
-           "<Response>" +
-           "<Say voice=\"Polly.Marlene\">Willkommen beim Innovation Coach. Wie kann ich Ihnen heute helfen?</Say>" +
-           "<Gather input=\"speech\" action=\"/twilio/process-input\" method=\"POST\" speechTimeout=\"auto\" language=\"de-DE\">" +
-           "<Say voice=\"Polly.Marlene\">Bitte teilen Sie mir Ihre Frage mit.</Say>" +
-           "</Gather>" +
-           "</Response>";
+        "<Response>" +
+        "<Say voice=\"Polly.Marlene\">Willkommen beim Innovation Coach. Wie kann ich Ihnen heute helfen?</Say>" +
+        "<Gather input=\"speech\" action=\"/twilio/process-input\" method=\"POST\" speechTimeout=\"auto\" language=\"de-DE\">" +
+        "<Say voice=\"Polly.Marlene\">Bitte teilen Sie mir Ihre Frage mit.</Say>" +
+        "</Gather>" +
+        "</Response>";
   }
-  
+
   /**
    * Processes the user's speech input during a phone call
    */
@@ -127,9 +139,9 @@ public class PublicController {
   public String processCallInput(HttpServletRequest request) {
     String speechResult = request.getParameter("SpeechResult");
     String callerId = request.getParameter("From");
-    
+
     logger.info("Received speech input: {}", speechResult);
-    
+
     // Use the ChatService to generate a response
     ChatResponse chatResponse;
     try {
@@ -137,19 +149,19 @@ public class PublicController {
     } catch (Exception e) {
       logger.error("Error processing speech: {}", e.getMessage());
       return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
-             "<Response>" +
-             "<Say voice=\"Polly.Marlene\">Es gab ein Problem bei der Verarbeitung Ihrer Anfrage. Bitte versuchen Sie es später erneut.</Say>" +
-             "<Hangup/>" +
-             "</Response>";
+          "<Response>" +
+          "<Say voice=\"Polly.Marlene\">Es gab ein Problem bei der Verarbeitung Ihrer Anfrage. Bitte versuchen Sie es später erneut.</Say>" +
+          "<Hangup/>" +
+          "</Response>";
     }
-    
+
     // Return TwiML with the AI's response and gather more input
     return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
-           "<Response>" +
-           "<Say voice=\"Polly.Marlene\">" + chatResponse.aiMessage() + "</Say>" +
-           "<Gather input=\"speech\" action=\"/twilio/process-input\" method=\"POST\" speechTimeout=\"auto\" language=\"de-DE\">" +
-           "<Say voice=\"Polly.Marlene\">Haben Sie eine weitere Frage?</Say>" +
-           "</Gather>" +
-           "</Response>";
+        "<Response>" +
+        "<Say voice=\"Polly.Marlene\">" + chatResponse.aiMessage() + "</Say>" +
+        "<Gather input=\"speech\" action=\"/twilio/process-input\" method=\"POST\" speechTimeout=\"auto\" language=\"de-DE\">" +
+        "<Say voice=\"Polly.Marlene\">Haben Sie eine weitere Frage?</Say>" +
+        "</Gather>" +
+        "</Response>";
   }
 }
