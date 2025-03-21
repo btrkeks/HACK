@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
 import {
   DropdownMenu,
@@ -24,8 +25,14 @@ export default function Header() {
   return (
     <header className="w-full py-4 px-6 border-b border-primary/30 flex justify-between items-center bg-background">
       <div className="flex items-center">
-        <Link href="/" className="text-xl font-semibold text-primary">
-          App Name
+        <Link href="/" className="flex items-center">
+          <Image 
+            src="/logo.jpeg" 
+            alt="Logo" 
+            width={60} 
+            height={60} 
+            className="rounded-md"
+          />
         </Link>
 
         <nav className="ml-10 hidden md:flex space-x-6">
