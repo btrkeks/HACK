@@ -1,13 +1,13 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import Input from "@/components/ui/input"
-import Button from "@/components/ui/button"
 import InteractiveBackground from "@/components/interactive-background"
 import ChoiceDialog from "@/components/choice-dialog"
+import RequireAuth from "@/components/require-auth"
+import Input from "@/components/ui/input"
+import Button from "@/components/ui/button"
 
 interface CompanyData {
   companyName: string | null;
@@ -56,49 +56,51 @@ export default function MainPage() {
   }
 
   return (
-    <div className="relative flex items-center justify-center min-h-[calc(100vh-64px)] bg-background overflow-hidden">
-      <InteractiveBackground />
+    <RequireAuth>
+      <div className="relative flex items-center justify-center min-h-[calc(100vh-64px)] bg-background overflow-hidden">
+        <InteractiveBackground />
 
-      <div className="w-full max-w-md p-8 bg-white/90 backdrop-blur-md rounded-lg shadow-lg z-10 border border-primary/20">
-        <h1 className="text-2xl font-semibold mb-6 text-center text-primary">Willkommen beim Innovationsberater des Kanton St.Gallen</h1>
-        <p className="text-sm text-center mb-6 text-gray-700">Füge die Website deiner Firma ein um uns ein Onbaording zu erleichtern und starte den Prozess!</p>
+        <div className="w-full max-w-md p-8 bg-white/90 backdrop-blur-md rounded-lg shadow-lg z-10 border border-primary/20">
+          <h1 className="text-2xl font-semibold mb-6 text-center text-primary">Willkommen beim Innovationsberater des Kanton St.Gallen</h1>
+          <p className="text-sm text-center mb-6 text-gray-700">Füge die Website deiner Firma ein um uns ein Onbaording zu erleichtern und starte den Prozess!</p>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <Input
-            type="text"
-            placeholder="Name eingeben..."
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            fullWidth
-            className="border-primary/30 focus:border-primary"
-          />
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <Input
+              type="text"
+              placeholder="Name eingeben..."
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              fullWidth
+              className="border-primary/30 focus:border-primary"
+            />
 
-          <Input
-            type="text"
-            placeholder="URL hier eingeben..."
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            fullWidth
-            className="border-primary/30 focus:border-primary"
-          />
+            <Input
+              type="text"
+              placeholder="URL hier eingeben..."
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+              fullWidth
+              className="border-primary/30 focus:border-primary"
+            />
 
-          <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? 'Wird verarbeitet...' : 'Starten'}
-          </Button>
-          
-          {error && (
-            <p className="text-red-500 text-sm text-center mt-2">{error}</p>
-          )}
-        </form>
+            <Button type="submit" className="w-full" disabled={isLoading}>
+              {isLoading ? 'Wird verarbeitet...' : 'Starten'}
+            </Button>
+            
+            {error && (
+              <p className="text-red-500 text-sm text-center mt-2">{error}</p>
+            )}
+          </form>
+        </div>
+
+        {/* Pass company data to the choice dialog */}
+        <ChoiceDialog 
+          open={dialogOpen} 
+          onOpenChange={setDialogOpen} 
+          companyData={companyData} 
+          onCompanyDataChange={setCompanyData} 
+        />
       </div>
-
-      {/* Pass company data to the choice dialog */}
-      <ChoiceDialog 
-        open={dialogOpen} 
-        onOpenChange={setDialogOpen} 
-        companyData={companyData} 
-        onCompanyDataChange={setCompanyData} 
-      />
-    </div>
+    </RequireAuth>
   )
 }

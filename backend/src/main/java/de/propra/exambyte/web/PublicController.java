@@ -101,15 +101,13 @@ public class PublicController {
   }
 
   @PostMapping("/login")
-  public AuthResponse login(AuthRequest request) {
-    AppUser user = userRepository.findByUsername(request.username())
-        .orElseThrow(() -> new RuntimeException("Invalid username or password"));
-
-    if (!request.password().equals(user.getPassword())) {
-      throw new RuntimeException("Invalid username or password");
+  public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
+    try {
+      AppUser user = authService.login(request);
+      return ResponseEntity.ok(new AuthResponse(user.getId()));
+    } catch (RuntimeException e) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
-
-    return new AuthResponse(user.getId());
   }
 
   /**

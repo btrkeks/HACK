@@ -3,8 +3,9 @@
 import type React from "react"
 
 import { useState, useEffect } from "react"
-import Button from "@/components/ui/button"
 import { Phone, MicOff, Mic, PhoneOff } from "lucide-react"
+import RequireAuth from "@/components/require-auth"
+import Button from "@/components/ui/button"
 
 type CallHistory = {
   id: number
@@ -80,6 +81,7 @@ export default function CallPage() {
   };
 
   return (
+    <RequireAuth>
       <div className="flex h-[calc(100vh-64px)] bg-background">
         {/* Call History Sidebar */}
         <div
@@ -145,5 +147,6 @@ export default function CallPage() {
           </div>
         </div>
       </div>
+    </RequireAuth>
   );
 }

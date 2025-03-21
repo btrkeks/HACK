@@ -12,3 +12,5 @@ spring:
     password: hack
     username: hack
     url: jdbc:postgresql://database:5432/hack
+  flyway:
+    repair-on-migrate: true

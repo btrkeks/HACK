@@ -13,12 +13,10 @@ interface AppUser {
 
 export async function POST(request: Request) {
   try {
-    // Parse the request body
-    const body: LoginRequest = await request.json();
-    
-    // Make request to the backend
-    const backendUrl = process.env.BACKEND_URL || 'http://localhost:8080';
-    const response = await fetch(`${backendUrl}/login`, {
+    const body = await request.json();
+
+    // Forward the request to the backend
+    const response = await fetch(`${process.env.BACKEND_URL || 'http://localhost:8080'}/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -26,20 +24,22 @@ export async function POST(request: Request) {
       body: JSON.stringify(body),
     });
 
+    const data = await response.json();
+
     if (!response.ok) {
       return NextResponse.json(
-        { error: 'Invalid username or password' },
-        { status: 401 }
+          { error: 'Authentication failed' },
+          { status: response.status }
       );
     }
 
-    const data: AppUser = await response.json();
+    // Important: Pass through the 'userId' property exactly as received from backend
     return NextResponse.json(data);
   } catch (error) {
-    console.error('Error in login API:', error);
+    console.error('Login error:', error);
     return NextResponse.json(
-      { error: 'Failed to process login' },
-      { status: 500 }
+        { error: 'An error occurred during login' },
+        { status: 500 }
     );
   }
 }

@@ -1,20 +1,24 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
-import { ChevronDown } from "lucide-react"
+import { ChevronDown, User } from "lucide-react"
+import { useAuth } from "@/hooks/use-auth"
+import Button from "@/components/ui/button"
 
 export default function Header() {
   const pathname = usePathname()
+  const router = useRouter()
+  const { isLoggedIn, logout } = useAuth()
 
   const handleSignIn = () => {
-    console.log("Sign-in clicked")
+    router.push("/login")
   }
 
   return (
@@ -66,13 +70,33 @@ export default function Header() {
         </nav>
       </div>
 
-      <button
-        onClick={handleSignIn}
-        className="px-4 py-2 text-sm border border-primary rounded-md text-primary hover:bg-primary hover:text-white transition-colors"
-      >
-        Anmelden
-      </button>
+      {isLoggedIn ? (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="sm" className="gap-2">
+              <User className="h-4 w-4" />
+              <span>Konto</span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem asChild>
+              <Link href="/profile">Profil</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={logout}>
+              Abmelden
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      ) : (
+        <Button
+          onClick={handleSignIn}
+          variant="outline"
+          size="sm"
+          className="text-primary border-primary hover:bg-primary hover:text-white transition-colors"
+        >
+          Anmelden
+        </Button>
+      )}
     </header>
   )
 }
-
